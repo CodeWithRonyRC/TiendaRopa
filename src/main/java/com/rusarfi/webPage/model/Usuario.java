@@ -12,14 +12,26 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 @Table(name="tbl_usuario")
+
 public class Usuario extends BaseEntity{
-    public enum Rol{MANTENEDOR,ADMIN}
+	
+    public enum Rol{MANTENEDOR,ADMIN, CLIENTE}
+    
     @Column(name="nom_usuario", length=50, nullable=false)
     private String nombreUsuario;
+    
+    @Column(name="ape_usuario", length=50, nullable=false)
+    private String apellidoUsuario;
+    
+    @Column(name="direccion", length=200, nullable=false)
+    private String direccion;
+    
     @Column(name="email",length=100, nullable=false)
     private String emailUsuario;
+    
     @Column(name="password",length=254, nullable=false)
     private String passwordUsuario;
+    
     @Enumerated(EnumType.STRING)
     @Column(name = "Rol", nullable=false)
     private Rol rol;

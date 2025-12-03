@@ -17,13 +17,16 @@ public class DataInitializer {
         // Verificar si ya existe
         if (usuarioRepository.findByEmailUsuario(adminEmail).isEmpty()) {
             Usuario admin = Usuario.builder()
-                    .nombreUsuario("Administrador")
+                    .nombreUsuario("Administrador")                   
+                    .apellidoUsuario("Sistema") 
+                    .direccion("Oficina Central")                   
                     .emailUsuario(adminEmail)
                     .passwordUsuario(passwordEncoder.encode("1234"))
                     .rol(Usuario.Rol.ADMIN)
                     .createdAt(LocalDateTime.now())
                     .createdBy("system")
                     .build();
+
             usuarioRepository.save(admin);
         }
     }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -52,4 +53,17 @@ public class CatalogoController {
 
         return "catalogo";
     }
+    
+ // ... código anterior ...
+
+    // NUEVO MÉTODO PARA VER DETALLE DE UN PRODUCTO
+    @GetMapping("/producto/{id}")
+    public String verDetalle(@PathVariable Integer id, Model model) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado: " + id));
+        
+        model.addAttribute("producto", producto);
+        return "detalle_producto"; // Nombre del archivo HTML que crearemos
+    }
 }
+
