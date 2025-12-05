@@ -50,6 +50,6 @@ public class CatalogoController {
         model.addAttribute("productos", productos);
         model.addAttribute("categorias", categoriaRepository.findAll());
 
-        return "catalogo";
+        return "catalogo.component";
     }
 }
