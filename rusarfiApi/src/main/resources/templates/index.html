@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
+<head th:replace="~{layout/base::head}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav th:replace="~{layout/base::navbar}"></nav>
+    <main class="container py-5">
+        <div class="row align-items-center">
+
+            <!-- Lado izquierdo: Reseña -->
+            <div class="col-md-6 mb-4 mb-md-0">
+                <h1 class="fw-bold text-warning mb-3">Bienvenido a Rusarfi</h1>
+                <p class="fs-5 text-secondary">
+                    <strong>Rusarfi</strong> es una empresa dedicada a la comercialización de ropa moderna y de alta calidad,
+                    comprometida en brindar estilo, comodidad y elegancia a cada cliente.
+                </p>
+                <p class="text-secondary">
+                    Encuentra las mejores prendas para toda ocasión. ¡Vístete con confianza y estilo con Rusarfi!
+                </p>
+                <a th:href="@{/catalogo}" class="btn btn-warning btn-lg fw-bold mt-3">
+                    <i class="bi bi-bag-check-fill me-2"></i> Ver Catálogo
+                </a>
+            </div>
+
+            <!-- Lado derecho: Imagen -->
+            <div class="col-md-6 text-center">
+                <img th:src="@{/tienda-ropa-frontend/src/assets/images/rusarfi01.jpg}"
+                     alt="Catálogo Rusarfi"
+                     class="img-fluid rounded shadow-lg"
+                     style="max-height: 400px; object-fit: cover;">
+            </div>
+
+        </div>
+    </main>
+    <footer th:replace="~{layout/base::footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
