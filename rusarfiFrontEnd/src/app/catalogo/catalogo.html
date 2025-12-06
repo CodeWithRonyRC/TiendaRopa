@@ -1,0 +1,90 @@
+<main class="flex-grow-1 bg-light py-5">
+    <div class="container">
+        <!-- Título -->
+        <h2 class="text-center mb-5 fw-bold text-dark">{{ pageTitle }}</h2>
+        
+        <!-- Indicador de Carga -->
+        <div *ngIf="loading" class="text-center my-5">
+            <div class="spinner-border text-warning" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="text-muted mt-2">Cargando productos...</p>
+        </div>
+
+        <!-- Filtros -->
+        <form [formGroup]="filterForm" (ngSubmit)="applyFilters()" class="row g-3 mb-4 p-3 bg-white rounded shadow-lg">
+            <!-- Categoría -->
+            <div class="col-md-4">
+                <label for="categoria" class="form-label fw-semibold">Categoría</label>
+                <select id="categoria" formControlName="categoria" class="form-select">
+                    <option [value]="''">Todas</option>
+                    <option *ngFor="let cat of categorias" [value]="cat.id">{{ cat.nombre }}</option>
+                </select>
+            </div>
+
+            <!-- Precio -->
+            <div class="col-md-4">
+                <label for="precioMax" class="form-label fw-semibold">Precio máximo (S/)</label>
+                <input type="number" id="precioMax" formControlName="precioMax" class="form-control" placeholder="Ej. 150">
+            </div>
+
+            <!-- Stock -->
+            <div class="col-md-4 d-flex align-items-end">
+                <div class="form-check pb-2">
+                    <input class="form-check-input" type="checkbox" formControlName="enStock" id="enStock">
+                    <label class="form-check-label fw-semibold" for="enStock">Solo productos en stock</label>
+                </div>
+            </div>
+
+            <!-- Botón de búsqueda -->
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-warning px-4 mt-2 fw-bold" [disabled]="loading">
+                    <i class="bi bi-funnel-fill me-2"></i> Filtrar
+                </button>
+            </div>
+        </form>
+        
+        <!-- Mensaje de Error -->
+        <div *ngIf="errorMessage" class="alert alert-danger text-center mt-4">{{ errorMessage }}</div>
+
+        <!-- Catálogo de productos -->
+        <div class="row g-4 mt-4" *ngIf="!loading && productos.length > 0">
+            <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let producto of productos">
+                <div class="card h-100 shadow-sm border-0 transition-shadow hover:shadow-lg">
+                    <!-- Imagen principal -->
+                    <!-- Se utiliza el primer elemento de imagenProductos y su propiedad urlImagen -->
+                    <img [src]="producto.imagenProductos.length > 0 ? producto.imagenProductos[0].urlImagen : 'https://placehold.co/400x300/e9ecef/212529?text=Sin+Imagen'"
+                         class="card-img-top object-cover"
+                         alt="Imagen de producto"
+                         style="height: 200px;">
+
+                    <div class="card-body d-flex flex-column">
+                        <!-- Nombre -->
+                        <h5 class="card-title fw-bold text-dark">{{ producto.nombreProducto }}</h5>
+
+                        <!-- Descripción -->
+                        <!-- Se usa la descripción corta para la vista de tarjeta -->
+                        <p class="card-text text-muted small flex-grow-1">{{ producto.descripcionProducto | slice:0:70 }}...</p>
+
+                        <!-- Precio -->
+                        <p class="fw-semibold mb-1 fs-5 text-success">S/ {{ producto.precio | number:'1.2-2' }}</p>
+
+                        <!-- Stock -->
+                        <span [ngClass]="producto.stock > 0 ? 'badge bg-success mb-3' : 'badge bg-danger mb-3'">
+                            {{ producto.stock > 0 ? 'Disponible (' + producto.stock + ' uds)' : 'Agotado' }}
+                        </span>
+
+                        <!-- Botón de detalles (opcional) -->
+                        <a [routerLink]="['/catalogo', producto.id]" class="btn btn-outline-warning mt-auto fw-semibold">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Si no hay productos (después de cargar) -->
+        <div *ngIf="!loading && productos.length === 0 && !errorMessage" class="text-center mt-5 p-5 bg-white rounded shadow-sm">
+            <p class="text-muted fs-5 mb-0">No se encontraron productos con los filtros seleccionados.</p>
+            <p class="text-muted small mt-1">Intenta modificar los criterios de búsqueda.</p>
+        </div>
+    </div>
+</main>

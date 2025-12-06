@@ -1,0 +1,11 @@
+/* src/app/inventario/inventario.css 
+:host {
+  display: block;
+  padding-top: 1rem;
+}
+
+.list-group-item h5 {
+  margin-bottom: 0.25rem;
+}
+
+.btn { min-width: 80px; }  */

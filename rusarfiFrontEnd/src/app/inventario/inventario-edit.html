@@ -1,0 +1,73 @@
+<!-- src/app/inventario/inventario-edit.html -->
+<div class="container py-4">
+  <h2 class="text-warning mb-3">{{ isEdit ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+
+  <form (ngSubmit)="submit()" class="card shadow-sm p-4 bg-light" enctype="multipart/form-data" novalidate>
+    <input type="hidden" formControlName="id">
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Nombre</label>
+      <input type="text" class="form-control" formControlName="nombreProducto" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Descripción</label>
+      <textarea class="form-control" formControlName="descripcionProducto" rows="3" required></textarea>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">Precio (S/)</label>
+        <input type="number" class="form-control" formControlName="precio" step="0.01" min="0" required>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">Stock</label>
+        <input type="number" class="form-control" formControlName="stock" min="0" required>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Talla</label>
+      <select class="form-select" formControlName="talla">
+        <option value="">Seleccione una talla</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Categoría</label>
+      <select class="form-select" formControlName="categoriaId">
+        <option value="">Seleccione una categoría</option>
+        <!-- Si tienes un catálogo de categorías debes cargarlo y hacer *ngFor aquí -->
+        <option value="1">Ropa</option>
+        <option value="2">Accesorios</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Agregar o reemplazar imágenes</label>
+      <input type="file" id="imagenInput" class="form-control" (change)="onFilesChange($event)" multiple accept="image/*">
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mt-2" *ngIf="previewUrls.length">
+      <div *ngFor="let url of previewUrls" class="position-relative">
+        <img [src]="url" class="img-thumbnail" style="width:120px;height:120px;object-fit:cover;">
+      </div>
+    </div>
+
+    <div class="text-end mt-3">
+      <button type="button" class="btn btn-secondary me-2" (click)="volver()">Volver</button>
+
+      <button *ngIf="isEdit" type="button" class="btn btn-danger me-2" (click)="eliminarProducto()">
+        <i class="bi bi-trash"></i> Eliminar
+      </button>
+
+      <button type="submit" class="btn btn-success fw-bold">
+        <i class="bi bi-save"></i> Guardar
+      </button>
+    </div>
+  </form>
+</div>

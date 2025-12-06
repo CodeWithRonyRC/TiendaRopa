@@ -1,0 +1,74 @@
+<div class="container py-5">
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-warning" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="text-muted mt-2">Cargando detalles del producto...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger text-center mt-4">
+    {{ errorMessage }}
+    <button routerLink="/catalogo" class="btn btn-sm btn-outline-danger ms-3">Volver al Catálogo</button>
+  </div>
+
+  <div *ngIf="producto" class="card shadow-lg border-0">
+    <div class="row g-0">
+      <!-- Columna de Imágenes -->
+      <div class="col-md-6 p-4">
+        <!-- Imagen Principal -->
+        <img [src]="producto.imagenProductos?.length ? producto.imagenProductos[0].urlImagen : 'https://placehold.co/600x600/e9ecef/212529?text=Ropa+Rusa'"
+             class="img-fluid rounded shadow-sm mb-3"
+             alt="Imagen principal de {{ producto.nombreProducto }}">
+        
+        <!-- Miniaturas (Galería) -->
+        <div class="d-flex gap-2 overflow-auto">
+          <img *ngFor="let img of producto.imagenProductos"
+               [src]="img.urlImagen"
+               class="border rounded cursor-pointer"
+               style="width: 80px; height: 80px; object-fit: cover;"
+               alt="Miniatura">
+        </div>
+      </div>
+
+      <!-- Columna de Detalles -->
+      <div class="col-md-6 p-5">
+        <h1 class="fw-bold text-dark">{{ producto.nombreProducto }}</h1>
+        <p class="text-muted small">Código: {{ producto.codigoModelo || 'N/A' }}</p>
+        
+        <hr>
+
+        <h2 class="text-success fw-bolder mb-3">S/ {{ producto.precio | number:'1.2-2' }}</h2>
+
+        <p class="lead">{{ producto.descripcionProducto }}</p>
+
+        <hr>
+        
+        <div class="mb-3">
+          <span class="fw-semibold me-2">Talla:</span>
+          <span class="badge bg-secondary">{{ producto.talla }}</span>
+        </div>
+        
+        <div class="mb-3">
+          <span class="fw-semibold me-2">Categoría:</span>
+          <span class="badge bg-info text-dark">{{ producto.categoria.nombre }}</span>
+        </div>
+        
+        <div class="mb-4">
+          <span class="fw-semibold me-2">Disponibilidad:</span>
+          <span [ngClass]="producto.stock > 0 ? 'badge bg-success' : 'badge bg-danger'">
+            {{ producto.stock > 0 ? 'En Stock (' + producto.stock + ' uds)' : 'Agotado' }}
+          </span>
+        </div>
+
+        <!-- Botón de Acción -->
+        <button class="btn btn-warning btn-lg fw-bold w-100" [disabled]="producto.stock <= 0">
+          <i class="bi bi-cart-fill me-2"></i> Añadir al Carrito
+        </button>
+        
+        <div class="mt-3 text-center">
+          <button routerLink="/catalogo" class="btn btn-link text-muted">Volver al Catálogo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
